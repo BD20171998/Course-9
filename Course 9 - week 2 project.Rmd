@@ -1,0 +1,20 @@
+---
+title: "Course 9 - week 2 project"
+author: "Robert Deprizio"
+date: "10/28/2018"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+
+```{r echo=FALSE,warning=FALSE}
+library(leaflet)
+UCSBicon<-makeIcon(iconUrl = "https://upload.wikimedia.org/wikipedia/en/4/49/UC_Santa_Barbara_seal.svg",iconWidth = 40,iconHeight = 40,iconAnchorY = 20)
+mymap<-leaflet() %>%
+addTiles() %>%
+  addMarkers(lat=34.4140,lng=-119.8489, popup = "My school: University of California-Santa Barbara",icon = UCSBicon) %>%
+addCircles(popup ="Place to rest",weight=3,radius=30,lat=34.413264,lng=-119.858720)
+mymap
+```
+
