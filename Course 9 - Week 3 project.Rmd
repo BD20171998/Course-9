@@ -1,0 +1,61 @@
+---
+title: "Course 9 - Week 3 project"
+author: "Robert Deprizio"
+date: "11/3/2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+```
+
+## R Markdown
+
+In this presentation we'll examine a few of the basic features of the **Plotly** package using the **mtcars** data set that's prepackaged with R. For additional information on the package you'll want to visit
+
+https://plot.ly/r/
+
+
+## Downloading the Plotly package 
+
+To download and install the **Plotly** package call the **install.packages("plotly")** function if you haven't already done so.  
+
+## Plot 1 - R code
+Using the code below we'll create some box plots to show the displacement amounts for each car by cylinder type (4,6,8). Note that we'll have to convert the **cyl** variable to a factor variable
+
+```{r, echo = TRUE,results="hide",warning=FALSE}
+library(plotly)
+mtcars$cyl<-as.factor(mtcars$cyl)
+p<-plot_ly(mtcars,y=~disp,color = ~cyl,type="box")
+p
+```
+
+## Plot 1 output
+
+Here we see that if we hover over the plots we can view the quartile amounts of the **displacement** variable for each cylinder type
+```{r,warning=FALSE}
+p<-plot_ly(mtcars,y=~disp,color = ~cyl,type="box")
+p
+```
+
+##Plot 2- R code
+The code below computes the mean of the **mpg** variable for each of the factors for the **am** variable where "0" represents manual transmission cars and "1" to denote cars with automatic transmissions
+```{r, echo = TRUE,results="hide",warning=FALSE}
+mtcars$am<-as.factor(mtcars$am)
+averages<-aggregate(mtcars$mpg,by=list(mtcars$am),mean)
+averages$Group.1<-as.factor(averages$Group.1)
+second_plot<-plot_ly(x=averages$Group.1,y=averages$x,
+                     color=averages$Group.1,type="bar")
+second_plot
+```
+
+##Plot 2 - MPG averages by transmission 
+If we hover the cursor over the bar representing automatic transmissions we can see that those cars have roughly an avg. mpg = 24 
+```{r, echo = FALSE,warning=FALSE,fig.width=5, fig.height=7}
+mtcars$am<-as.factor(mtcars$am)
+averages<-aggregate(mtcars$mpg,by=list(mtcars$am),mean)
+averages$Group.1<-as.factor(averages$Group.1)
+second_plot<-plot_ly(x=averages$Group.1,y=averages$x,color = averages$Group.1,type="bar")
+second_plot
+```
